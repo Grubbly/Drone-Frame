@@ -21,6 +21,10 @@ arm_width = 20;
 arm_length = 60;
 distance_to_arm_end = 1.5*motor_mount_to_arm_transition_length+(arm_length);
   
+// Body
+body_width = 45;
+body_height = 90;
+arm_angle_from_body = 45;
    
 /*************/
 /** Modules **/
@@ -76,27 +80,41 @@ module motor_mount() {
 }
 
 module arm() {
-    difference() {
+    
         translate([0,1.5*motor_mount_to_arm_transition_length+(0.5*arm_length),0])
             square([arm_width,arm_length],center=true);
-    
-        screw_hole();
-    }
 }
 
 
-module screw_hole() {
-    translate([5,distance_to_arm_end-15])
+module arm_to_body_screw_holes() {
+    align_to_corners_on_body() {
+    linear_extrude(height = 7, center = true, convexity = 10) {
+        translate([5,distance_to_arm_end-5])
+            circle(r=0.5*screwSize,center=true);
+        
+        translate([-5,distance_to_arm_end-5])
+            circle(r=0.5*screwSize,center=true);
+        
+        translate([0,distance_to_arm_end-10])
+            circle(r=0.5*screwSize,center=true);
+    }
+    }
+}
+
+module cc3d_screw_holes() {
+    translate([15,15])
         circle(r=0.5*screwSize,center=true);
-    
-    translate([-5,distance_to_arm_end-15])
+    translate([-15,15])
         circle(r=0.5*screwSize,center=true);
-    
-    translate([0,distance_to_arm_end-5])
+    translate([15,-15])
+        circle(r=0.5*screwSize,center=true);
+    translate([-15,-15])
         circle(r=0.5*screwSize,center=true);
 }
 
 module drone_arm() { 
+    
+
     //linear_extrude(height = 4, center = true, convexity = 10) {
     //offset(r=+0.5) offset(r=-0.5)
     //offset(r=-0.5) offset(r=+0.5)
@@ -106,5 +124,50 @@ module drone_arm() {
     //}
 }
 
-drone_arm();
+module align_arm(x=1,y=1,angle) {
+    translate([x*(0.5*body_width+arm_length),y*(0.5*body_height+arm_length),0]) { 
+            rotate([0,0,angle]) {
+                children();
+            }
+    }
+}
+
+module body_base() {
+    difference() {
+        square([body_width,body_height],center=true);
+        cc3d_screw_holes();
+    }
+}
+
+
+module align_to_corners_on_body() {
+    align_arm(1,-1,arm_angle_from_body) 
+        children();
+    
+    align_arm(-1,-1,-arm_angle_from_body) 
+        children();
+    
+    align_arm(-1,1,180+arm_angle_from_body) 
+        children();
+    
+    align_arm(1,1,-180-arm_angle_from_body) 
+        children();
+}
+
+module body_and_arms() {
+    body_base();
+    align_to_corners_on_body() {
+        drone_arm();
+    }
+}
+
+module drone_body() {
+    difference() {
+        body_and_arms();
+        #arm_to_body_screw_holes();
+    }
+}
+
+//drone_arm();
+drone_body();
 

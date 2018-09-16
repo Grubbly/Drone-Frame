@@ -367,7 +367,7 @@ module four_arms_separated() {
                 drone_arm();
                 translate([-35,40+distance_to_arm_end/2 - 7])
                 rotate([0,0,180])
-                #drone_arm();
+                drone_arm();
             }
             }
         }
@@ -418,9 +418,3 @@ if(show_assembled_model)
     drone_frame();
 else
     segmented_drone_frame();
-
-
-
-
-
-

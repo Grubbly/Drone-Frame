@@ -12,7 +12,7 @@
 /*******************************************************************
 *   // Change to true to see a rough model of the assembled frame  *
 *                                                                  *
-*/    show_assembled_model = true;                                /*
+*/    show_assembled_model = false;                                /*
 *                                                                  *
 ********************************************************************/
 
@@ -393,30 +393,31 @@ module two_enclosure_walls_separated() {
             translate([40,-50,0])
             rotate([0,180,-45]) {
             enclosure_wall();
-            }
+            } /*
             mirror([0,0,1]) {
             translate([-40,-50,0])
             rotate([0,0,45])
             enclosure_wall();
-        }
+        } */
     }
 }
 
 module segmented_drone_frame() {
-    
+    /*
     difference() {
         body_and_arms_difference();
         arm_to_body_screw_holes();
         enclosure_to_body_screw_holes();
-    }
+    } */
     
     two_enclosure_walls_separated();
-  
+    /*
     translate([0,70,-30])
     rotate([-15,0,0])
     enclosure_roof_and_screws();
      
     four_arms_separated();
+    */
 }
 
 module drone_frame() {

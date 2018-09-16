@@ -12,7 +12,7 @@
 /*******************************************************************
 *   // Change to true to see a rough model of the assembled frame  *
 *                                                                  *
-*/    show_assembled_model = false;                                /*
+*/    show_assembled_model = true;                                /*
 *                                                                  *
 ********************************************************************/
 
@@ -48,6 +48,7 @@ arm_angle_from_body = 45;
 enclosure_width  = 60;
 enclosure_height = 45;
 enclosure_thickness = 2;
+antenna_radius = 2;
    
 /*************/
 /** Modules **/
@@ -209,6 +210,7 @@ module body_and_arms_difference() {
 }
 
 module enclosure_wall() {
+    union() {
     difference() {
         union() {
             linear_extrude(height = enclosure_extrude_height, convexity = 10, center=true)
@@ -254,16 +256,32 @@ module enclosure_wall() {
                 }
             
        }
-       translate([enclosure_height/4,0,0])
-        linear_extrude(height = 20, convexity = 10, center=true)
-           square([(enclosure_height/2)+1,enclosure_width/1.5],center=true);
+       difference() {
+           translate([enclosure_height/4,0,0])
+            linear_extrude(height = 20, convexity = 10, center=true)
+               square([(enclosure_height/2)+1,enclosure_width/1.5],center=true);
+           translate([7,-25,0]) 
+            rotate([0,0,15]) 
+                linear_extrude(height = 20, convexity = 10, center=true) {
+                    square([5,50]);
+                }
+            }
        
-       //side slice
+       // side slice
        translate([-40,0,0]) 
             rotate([0,0,15]) 
                 linear_extrude(height = 20, convexity = 10, center=true) {
                     square([55,80],center=true);
                 }
+                
+       // velcro
+       translate([-7+0.5*1.75,4+(4/14),0]) 
+            rotate([0,90,15]) 
+                linear_extrude(height = 1, convexity = 10, center=true) {
+                    square([22,22],center=true);
+                }
+   }
+   
    }
 }
 
@@ -280,7 +298,12 @@ module enclosure_roof_and_screws(shift_factor=0) {
     translate([0,0,31.5+shift_factor]) {
         rotate([15,0,0]) {
             linear_extrude(height = 2, center = true, convexity = 10)
-            square([30-enclosure_extrude_height,62],center=true);
+            difference() {
+                square([30-enclosure_extrude_height,62],center=true);
+                
+                translate([0,-25,0])
+                    circle(r=antenna_radius, center=true);
+            }
         }
     }
     
@@ -320,18 +343,6 @@ module body_enclosure(shift_factor=0) {
                     enclosure_wall();
                 }
             }
-            
-            
-                translate([0,0,32+shift_factor]) {
-                rotate([15,0,0]) {
-
-                
-                //velcro strap
-                rotate([0,0,90])
-                translate([5,0,-5])
-                square([22,80],center=true);
-            }
-        }
         
         }
     
@@ -356,14 +367,14 @@ module enclosure_to_body_screw_holes(){
 }
 
 module four_arms_separated() {
-    translate([80,40-arm_length/2]) {
+    translate([73,40-arm_length/2]) {
         linear_extrude(height=drone_arm_thickness, center=true, convexity=5) {
             drone_arm();
             translate([-35,40+distance_to_arm_end/2 - 7])
             rotate([0,0,180])
             drone_arm();
             mirror([1,0,0]) {
-            translate([160,40-distance_to_arm_end/2 + 7]){
+            translate([146,40-distance_to_arm_end/2 + 7]){
                 drone_arm();
                 translate([-35,40+distance_to_arm_end/2 - 7])
                 rotate([0,0,180])
@@ -375,14 +386,16 @@ module four_arms_separated() {
 }
 
 module two_enclosure_walls_separated() {
-    translate([40,-55,0])
-    rotate([0,180,-45]) {
-    enclosure_wall();
-    }
-    mirror([0,0,1]) {
-    translate([-40,-55,0])
-    rotate([0,0,45])
-    enclosure_wall();
+        union() {
+            translate([40,-50,0])
+            rotate([0,180,-45]) {
+            enclosure_wall();
+            }
+            mirror([0,0,1]) {
+            translate([-40,-50,0])
+            rotate([0,0,45])
+            enclosure_wall();
+        }
     }
 }
 

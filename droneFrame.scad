@@ -12,7 +12,7 @@
 /*******************************************************************
 *   // Change to true to see a rough model of the assembled frame  *
 *                                                                  *
-*/    show_assembled_model = true;                                /*
+*/    show_assembled_model = false;                                /*
 *                                                                  *
 ********************************************************************/
 
@@ -137,7 +137,7 @@ module cc3d_screw_holes() {
 }
 
 module arm_end_screw_holes() {
-    linear_extrude(height = 7, center = true, convexity = 10) {
+    //linear_extrude(height = 7, center = true, convexity = 10) {
         translate([5,distance_to_arm_end-5])
             circle(r=0.5*screwSize,center=true);
         
@@ -146,7 +146,7 @@ module arm_end_screw_holes() {
         
         translate([0,distance_to_arm_end-10])
             circle(r=0.5*screwSize,center=true);
-    }
+    //}
 }
 
 module drone_arm() { 

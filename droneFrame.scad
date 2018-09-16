@@ -12,7 +12,7 @@
 /*******************************************************************
 *   // Change to true to see a rough model of the assembled frame  *
 *                                                                  *
-*/    show_assembled_model = false;                                /*
+*/    show_assembled_model = true;                                /*
 *                                                                  *
 ********************************************************************/
 
@@ -137,7 +137,6 @@ module cc3d_screw_holes() {
 }
 
 module arm_end_screw_holes() {
-    //linear_extrude(height = 7, center = true, convexity = 10) {
         translate([5,distance_to_arm_end-5])
             circle(r=0.5*screwSize,center=true);
         
@@ -145,15 +144,19 @@ module arm_end_screw_holes() {
             circle(r=0.5*screwSize,center=true);
         
         translate([0,distance_to_arm_end-10])
-            circle(r=0.5*screwSize,center=true);
-    //}
+            circle(r=0.5*screwSize,center=true);     
 }
 
-module drone_arm() { 
+module drone_arm(extrude=true) { 
     motor_mount();
     difference() {
         arm();
-        arm_end_screw_holes();
+        if(extrude) {
+            linear_extrude(height = 7, center = true, convexity = 10)
+                arm_end_screw_holes();       
+        } else {
+            arm_end_screw_holes();
+        }
     }
 }
 
@@ -369,16 +372,16 @@ module enclosure_to_body_screw_holes(){
 module four_arms_separated() {
     translate([73,40-arm_length/2]) {
         linear_extrude(height=drone_arm_thickness, center=true, convexity=5) {
-            drone_arm();
+            drone_arm(false);
             translate([-35,40+distance_to_arm_end/2 - 7])
             rotate([0,0,180])
-            drone_arm();
+            drone_arm(false);
             mirror([1,0,0]) {
             translate([146,40-distance_to_arm_end/2 + 7]){
-                drone_arm();
+                drone_arm(false);
                 translate([-35,40+distance_to_arm_end/2 - 7])
                 rotate([0,0,180])
-                drone_arm();
+                drone_arm(false);
             }
             }
         }

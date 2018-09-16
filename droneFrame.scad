@@ -8,9 +8,13 @@
 // KV2600 BR2205 motors.
 //
 
-// Change to true to see a rough model of the assembled frame
-show_assembled_model = true;
 
+/*******************************************************************
+*   // Change to true to see a rough model of the assembled frame  *
+*                                                                  *
+*/    show_assembled_model = false;                                /*
+*                                                                  *
+********************************************************************/
 
 // General Variables
 screwSize = 3; // m3 by default

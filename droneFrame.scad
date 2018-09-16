@@ -393,12 +393,12 @@ module two_enclosure_walls_separated() {
             translate([40,-50,0])
             rotate([0,180,-45]) {
             enclosure_wall();
-            } /*
+            } 
             mirror([0,0,1]) {
             translate([-40,-50,0])
             rotate([0,0,45])
             enclosure_wall();
-        } */
+        } 
     }
 }
 

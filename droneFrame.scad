@@ -403,21 +403,21 @@ module two_enclosure_walls_separated() {
 }
 
 module segmented_drone_frame() {
-    /*
+    
     difference() {
         body_and_arms_difference();
         arm_to_body_screw_holes();
         enclosure_to_body_screw_holes();
-    } */
+    } 
     
     two_enclosure_walls_separated();
-    /*
+    
     translate([0,70,-30])
     rotate([-15,0,0])
     enclosure_roof_and_screws();
      
     four_arms_separated();
-    */
+    
 }
 
 module drone_frame() {

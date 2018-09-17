@@ -19,9 +19,9 @@ $fa = 1;
 $fs = 0.1;
 
 // Motor mount
-motor_key_radius = 8;
-motor_mount_radius = 20;
-motor_screw_distance_from_center = 8.5;
+motor_key_radius = 4;
+motor_mount_radius = 15.5;
+motor_screw_distance_from_center = 6;
 motor_mount_to_arm_transition_length = 27;
 
 // Arm

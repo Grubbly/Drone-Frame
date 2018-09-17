@@ -12,7 +12,7 @@
 /*******************************************************************
 *   // Change to true to see a rough model of the assembled frame  *
 *                                                                  *
-*/    show_assembled_model = false;                                /*
+*/    show_assembled_model = true;                                /*
 *                                                                  *
 ********************************************************************/
 

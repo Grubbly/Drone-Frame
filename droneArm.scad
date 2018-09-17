@@ -72,7 +72,6 @@ module motor_screw_ellipse(radiusX,radiusY) {
 }
 
 module arm_end_screw_holes() {
-    linear_extrude(height = 7, center = true, convexity = 10) {
         translate([5,distance_to_arm_end-5])
             circle(r=0.5*screwSize,center=true);
         
@@ -81,7 +80,6 @@ module arm_end_screw_holes() {
         
         translate([0,distance_to_arm_end-10])
             circle(r=0.5*screwSize,center=true);
-    }
 }
 
 module motor_mount() {
@@ -97,13 +95,18 @@ module arm() {
     square([arm_width,arm_length],center=true);
 }
 
-module drone_arm() { 
+module drone_arm(extrude=true) { 
     motor_mount();
     difference() {
         arm();
-        arm_end_screw_holes();
+        if(extrude) {
+            linear_extrude(height = 7, center = true, convexity = 10)
+                arm_end_screw_holes();       
+        } else {
+            arm_end_screw_holes();
+        }
     }
 }
 
 linear_extrude(height = drone_arm_thickness, center = true, convexity = 10)
-    drone_arm();
+    drone_arm(false);

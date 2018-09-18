@@ -1,4 +1,5 @@
 # The Leviathan Racing Quad
+#### (work in progress)
 This racing frame is a hybrid cross between standard 200mm and 250mm quad frames. It features a compact central enclosure with abnormally long wings that are attached to the body via snap-in divots and m3 screws. The current OpenSCAD file allows partial modification to the frame in terms of body and wing sizing, but further refactorings will make the frame completely modular.
 
 

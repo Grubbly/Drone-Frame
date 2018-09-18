@@ -16,8 +16,23 @@ Figure 2: Disassembled Frame
 ## Printing
 STLs of each frame component are available in ./STLs. There are two options for printing the frame:
 
-#### 1) Print each component separately
-#### 2) Print the entire disassembled version all at once
+1) Print each component separately
+2) Print the entire disassembled version all at once
+
+#### STLs:
+
+![Wing](./STLs/droneArm.stl)
+
+![Body](./STLs/droneBody.stl)
+
+![Enclosure Side](./STLs/droneBodyCaseSide.stl)
+
+![Enclosure Top](./STLs/droneBodyCaseTop.stl)
+
+![Frame Complete](./STLs/droneFrameComplete.stl)
+
+![Frame Disassembled](./STLs/droneFrameDisassembled.stl)
+
 
 ## OpenSCAD - droneFrame.scad
 ![Toggle Assembled/Disassembled View](./IMG/changeMeToChangeModel.PNG)

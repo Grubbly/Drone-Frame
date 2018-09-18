@@ -12,7 +12,7 @@
 /*******************************************************************
 *   // Change to true to see a rough model of the assembled frame  *
 *                                                                  *
-*/    show_assembled_model = true;                                /*
+*/    show_assembled_model = false;                                /*
 *                                                                  *
 ********************************************************************/
 
@@ -310,19 +310,18 @@ module enclosure_roof_and_screws(shift_factor=0) {
         }
     }
     
-    // NEEDS REFACTOR
     translate([15,0,22.5]) { 
         rotate([0,90,0]) {
             translate([-13.35-shift_factor,20,-0.5]) { 
                 rotate([-15,90,0]) {
                     translate([2.5+1,2.5]){
-                        counter_sunk_screw_hole();
+                            counter_sunk_screw_hole();
                         translate([24-2,0,0])
                             counter_sunk_screw_hole();
-                            translate([24-2,-50,0])
-                                counter_sunk_screw_hole();
-                                translate([0,-50,0])
-                                    counter_sunk_screw_hole();
+                        translate([24-2,-50,0])
+                            counter_sunk_screw_hole();
+                        translate([0,-50,0])
+                            counter_sunk_screw_hole();
                     }
                 }
             }

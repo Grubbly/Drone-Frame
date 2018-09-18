@@ -31,7 +31,7 @@ The OpenSCAD files for the complete model (droneFrame.scad) and the wing (arm.sc
 Crashes usually result in a broken or several broken wings. For this reason, the wings are disjoint from the body so in case of a crash only the wing (as opposed to the whole frame base) needs to be reprinted. Similar reasoning was used in designed the body enclosure, but these components break less frequently than the wings.
 
 ## Draft 3D Prints
-Here are a few my first 3D prints with this frame:
+Here are a few of my first 3D prints with this frame:
 
 ![3D Print Front](./IMG/3DPrintFront.jpg)
 

@@ -3,9 +3,9 @@
 // Homework 2 - OpenSCAD
 // 09/16/2018
 //
-// Modularish drone frame designed for racing sized quad-copters
-// with CC3D sized flight controllers (3mm X 3mm) and 
-// KV2600 BR2205 motors.
+// Modularish drone frame draft designed for racing 
+// sized quad-copters with CC3D sized flight 
+// controllers (3mm X 3mm) and KV2600 BR2205 motors.
 //
 
 
@@ -205,15 +205,22 @@ module body_and_arms_difference() {
     linear_extrude(height = drone_arm_thickness+1, center = true, convexity = 5)
     body_base();
     align_to_corners_on_body() {
-        translate([0,0,-0.32*3])
+        translate([0,0,-0.35*3])
         linear_extrude(height = drone_arm_thickness, convexity = 5)
         drone_arm();
     }
     }
 }
 
+module square_screw_bracket() {
+    square([5,5]);
+}
+
+module screw_size_cylinder(height=5) {
+    cylinder(r=0.5*screwSize, h=height, center=true);
+}
+
 module enclosure_wall() {
-    union() {
     difference() {
         union() {
             linear_extrude(height = enclosure_extrude_height, convexity = 10, center=true)
@@ -222,42 +229,40 @@ module enclosure_wall() {
                 translate([0.5*enclosure_extrude_height, 0.5*enclosure_width-5, 0.5*enclosure_height-1]) {
                     difference() {
                         linear_extrude(height = 2, convexity = 10, center=true)
-                        square([5,5]);
+                        square_screw_bracket();
                             translate([2.5,2.5])
-                                cylinder(r=0.5*screwSize, h=3, center=true);
+                                screw_size_cylinder(3);
                     }
                     
                     translate([0, -enclosure_width+5,0]){
                         difference() {
                             linear_extrude(height = 2, convexity = 10, center=true)
-                            square([5,5]);
+                            square_screw_bracket();
                                 translate([2.5,2.5])
-                                    cylinder(r=0.5*screwSize, h=3, center=true);
+                                    screw_size_cylinder(3);
                         }
                     }
                 }
             }
                 translate([-13.35+2*(13.35/20),20+0.25*(20/13.35),-0.5*enclosure_extrude_height]) {
-                    rotate([-15,90,0]){
-                        
-                    difference() {
-                    linear_extrude(height = 2, convexity = 10, center=true)
-                    square([5,5]);
-                        translate([2.5,2.5])
-                            cylinder(r=0.5*screwSize, h=3, center=true);
-                    }
-                    
-                    translate([0,-50,0]) {
+                    rotate([-15,90,0]){     
                         difference() {
                             linear_extrude(height = 2, convexity = 10, center=true)
-                            square([5,5]);
+                            square_screw_bracket();
                             translate([2.5,2.5])
-                                cylinder(r=0.5*screwSize, h=3, center=true);
+                                screw_size_cylinder(3);
+                        }
+                        
+                        translate([0,-50,0]) {
+                            difference() {
+                                linear_extrude(height = 2, convexity = 10, center=true)
+                                square_screw_bracket();
+                                translate([2.5,2.5])
+                                    screw_size_cylinder(3);
+                            }
                         }
                     }
-                    }
-                }
-            
+                }           
        }
        difference() {
            translate([enclosure_height/4,0,0])
@@ -268,7 +273,7 @@ module enclosure_wall() {
                 linear_extrude(height = 20, convexity = 10, center=true) {
                     square([5,50]);
                 }
-            }
+       }
        
        // side slice
        translate([-40,0,0]) 
@@ -280,20 +285,15 @@ module enclosure_wall() {
        // velcro
        translate([-7+0.5*1.75,4+(4/14),0]) 
             rotate([0,90,15]) 
-                linear_extrude(height = 1, convexity = 10, center=true) {
-                    square([22,22],center=true);
-                }
-   }
-   
+                linear_extrude(height = 1, convexity = 10, center=true) 
+                    square([22,22],center=true);              
    }
 }
 
-module counter_sunk_screw_hole() {
-    
+module counter_sunk_screw_hole() {    
         translate([0,0,-2.5])
             cylinder(r=0.75*screwSize, h=2);
-        cylinder(r=0.5*screwSize, h=5, center=true);
-    
+        screw_size_cylinder(5);
 }
 
 module enclosure_roof_and_screws(shift_factor=0) {
@@ -331,41 +331,37 @@ module enclosure_roof_and_screws(shift_factor=0) {
 }
 
 module body_enclosure(shift_factor=0) {
-    union() {
         difference() {
             translate([15,0,22.5+shift_factor]) {
-                rotate([0,90,0]) {
-                    
+                rotate([0,90,0])                 
                     enclosure_wall();
-                }
+                
                 mirror([0,0,1]) {
                     rotate([0,-90,0]) 
-                    translate([0,0,30])
-                   
+                    translate([0,0,30])                  
                     enclosure_wall();
                 }
             }
         
         }
     
-        enclosure_roof_and_screws(shift_factor);
-    }   
+        enclosure_roof_and_screws(shift_factor); 
 }
 
 module enclosure_to_body_screw_holes(){
     translate([15-enclosure_extrude_height-1.25,0.5*enclosure_height+5,0])
-    cylinder(r=0.5*screwSize, h=7, center=true);
+    screw_size_cylinder(7);
     
     translate([15-enclosure_extrude_height-1.25,-0.5*enclosure_height-5,0])
-    cylinder(r=0.5*screwSize, h=7, center=true);
+    screw_size_cylinder(7);
     
     mirror([1,0,0])
     translate([15-enclosure_extrude_height-1.25,0.5*enclosure_height+5,0])
-    cylinder(r=0.5*screwSize, h=7, center=true);
+    screw_size_cylinder(7);
     
     mirror([1,0,0])
     translate([15-enclosure_extrude_height-1.25,-0.5*enclosure_height-5,0])
-    cylinder(r=0.5*screwSize, h=7, center=true);
+    screw_size_cylinder(7);
 }
 
 module four_arms_separated() {
@@ -388,7 +384,6 @@ module four_arms_separated() {
 }
 
 module two_enclosure_walls_separated() {
-        union() {
             translate([40,-50,0])
             rotate([0,180,-45]) {
             enclosure_wall();
@@ -398,7 +393,6 @@ module two_enclosure_walls_separated() {
             rotate([0,0,45])
             enclosure_wall();
         } 
-    }
 }
 
 module segmented_drone_frame() {

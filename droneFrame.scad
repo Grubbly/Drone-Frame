@@ -226,39 +226,39 @@ module enclosure_wall() {
             linear_extrude(height = enclosure_extrude_height, convexity = 10, center=true)
             square([enclosure_height,enclosure_width],center=true);
             rotate([0,90,0]) {
-                translate([0.5*enclosure_extrude_height, 0.5*enclosure_width-5, 0.5*enclosure_height-1]) {
+                translate([0.5*enclosure_extrude_height, 0.5*enclosure_width-5, 0.5*enclosure_height-2]) {
                     difference() {
-                        linear_extrude(height = 2, convexity = 10, center=true)
+                        linear_extrude(height = 4, convexity = 10, center=true)
                         square_screw_bracket();
                             translate([2.5,2.5])
-                                screw_size_cylinder(3);
+                                screw_size_cylinder(5);
                     }
                     
                     translate([0, -enclosure_width+5,0]){
                         difference() {
-                            linear_extrude(height = 2, convexity = 10, center=true)
+                            linear_extrude(height = 4, convexity = 10, center=true)
                             square_screw_bracket();
                                 translate([2.5,2.5])
-                                    screw_size_cylinder(3);
+                                    screw_size_cylinder(5);
                         }
                     }
                 }
             }
-                translate([-13.35+2*(13.35/20),20+0.25*(20/13.35),-0.5*enclosure_extrude_height]) {
+                translate([-13.35+4*(13.35/20),20+0.25*(20/13.35),-0.5*enclosure_extrude_height]) {
                     rotate([-15,90,0]){     
                         difference() {
-                            linear_extrude(height = 2, convexity = 10, center=true)
+                            linear_extrude(height = 4, convexity = 10, center=true)
                             square_screw_bracket();
                             translate([2.5,2.5])
-                                screw_size_cylinder(3);
+                                screw_size_cylinder(5);
                         }
                         
                         translate([0,-50,0]) {
                             difference() {
-                                linear_extrude(height = 2, convexity = 10, center=true)
+                                linear_extrude(height = 4, convexity = 10, center=true)
                                 square_screw_bracket();
                                 translate([2.5,2.5])
-                                    screw_size_cylinder(3);
+                                    screw_size_cylinder(5);
                             }
                         }
                     }
